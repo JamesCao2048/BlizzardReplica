@@ -85,9 +85,16 @@ public class BLIZZARDRunner {
 
 				if (!repoName.isEmpty() && !bugIDFile.isEmpty()
 						&& !queryFile.isEmpty()) {
-					HashMap<Integer, String> suggestedQueries = new BLIZZARDQueryManager(
-							repoName, bugIDFile).getSuggestedQueries();
-					saveItems(queryFile, suggestedQueries);
+					if(keymap.containsKey("-concur")){
+						HashMap<Integer, String> suggestedQueries = new BLIZZARDQueryManager(
+								repoName, bugIDFile).getSuggestedQueriesConcur();
+						saveItems(queryFile, suggestedQueries);
+					}
+					else {
+						HashMap<Integer, String> suggestedQueries = new BLIZZARDQueryManager(
+								repoName, bugIDFile).getSuggestedQueries();
+						saveItems(queryFile, suggestedQueries);
+					}
 				}
 				break;
 			case "getResult":

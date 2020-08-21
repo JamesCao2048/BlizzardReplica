@@ -1,0 +1,38 @@
+<component name="ArtifactManager">
+  <artifact name="ca.usask.cs.srlab.blizzard.qrmodule:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/ca_usask_cs_srlab_blizzard_qrmodule_jar</output-path>
+    <root id="root">
+      <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.2" />
+      <element id="library" level="module" name="stemmer-traceback.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="jgrapht-ext-0.9.0.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="ca.usask.cs.srlab.strict-qrmodule.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="xom.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="lucene-queryparser-6.2.0.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="lucene-codecs-6.2.0.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="stanford-postagger-3.6.0.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="project" name="Maven: com.opencsv:opencsv:4.1" />
+      <element id="library" level="module" name="commons-math3-3.6.1.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="javaparser-core-2.3.0.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.6" />
+      <element id="library" level="module" name="ca.usask.cs.srlab.acer-qrmodule.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="junit-4.10.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="lucene-core-6.2.0.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="jgraphx-2.0.0.1.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
+      <element id="library" level="module" name="jgraph-5.13.0.0.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="ca.usask.cs.srlab.query-difficulty.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="commons-lang-2.6.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="jgrapht-core-0.9.0.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="jsoup-1.7.2.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="slf4j-api-1.7.17.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="ca.usask.cs.srlab.pagerank.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.9.3" />
+      <element id="library" level="project" name="Maven: org.apache.commons:commons-text:1.1" />
+      <element id="library" level="module" name="ejml-0.23.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="lucene-analyzers-common-6.2.0.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="lucene-queries-6.2.0.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="module-output" name="ca.usask.cs.srlab.blizzard.qrmodule" />
+      <element id="library" level="module" name="samurai.jar" module-name="ca.usask.cs.srlab.blizzard.qrmodule" />
+    </root>
+  </artifact>
+</component>

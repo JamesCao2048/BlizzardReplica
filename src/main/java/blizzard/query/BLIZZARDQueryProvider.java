@@ -121,13 +121,16 @@ public class BLIZZARDQueryProvider {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String repoName = "eclipse.jdt.ui";
-		int bugID = 187316;
-		String brFile = StaticData.HOME_DIR + "/BR-Raw/" + repoName + "/" + bugID + ".txt";
-		String title = BugReportLoader.loadBRTitle(repoName, bugID);
-		String bugReportContent = ContentLoader.loadFileContent(brFile);
+		String repoName = "tomcat";
+		for(int bugID = 0; bugID < 500; bugID++){
+			String brFile = StaticData.HOME_DIR + "/BR-Raw/" + repoName + "/" + bugID + ".txt";
+			String title = BugReportLoader.loadBRTitle(repoName, bugID);
+			String bugReportContent = ContentLoader.loadFileContent(brFile);
+			System.out.println(bugID + ": " + new BugReportClassifier(bugReportContent).determineReportClass());
+		}
 
-		BLIZZARDQueryProvider blizzardProvider = new BLIZZARDQueryProvider(repoName, bugID, title, bugReportContent);
-		System.out.println(blizzardProvider.provideBLIZZARDQuery());
+
+		//BLIZZARDQueryProvider blizzardProvider = new BLIZZARDQueryProvider(repoName, bugID, title, bugReportContent);
+		//System.out.println(blizzardProvider.provideBLIZZARDQuery());
 	}
 }

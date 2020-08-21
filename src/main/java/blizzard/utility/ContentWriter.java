@@ -3,6 +3,7 @@ package blizzard.utility;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContentWriter {
 	public static boolean writeContent(String outFile, ArrayList<String> items) {
@@ -12,6 +13,24 @@ public class ContentWriter {
 			FileWriter fwriter = new FileWriter(new File(outFile));
 			for (String item : items) {
 				fwriter.write(item + "\n");
+			}
+			fwriter.close();
+			written = true;
+
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		return written;
+	}
+
+	public static boolean writeContentIndexList(String outFile, List<String> items, int shift) {
+		// writing content to output with index
+		boolean written = false;
+		try {
+			FileWriter fwriter = new FileWriter(new File(outFile));
+
+			for (int i=0; i< items.size(); i++) {
+				fwriter.write((i+shift) + "::"+items.get(i)+"\n");
 			}
 			fwriter.close();
 			written = true;
