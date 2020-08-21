@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Rsrc-Class-Path: ./ antlr-4.5.1-complete.jar ca.usask.cs.srlab.pageran
+ k.jar ca.usask.cs.srlab.strict.jar coderank.jar commons-csv-1.2.jar c
+ ommons-lang-2.6.jar commons-math3-3.6.1.jar deeplearning4j-nlp-0.8.0.
+ jar ejml-0.23.jar javaparser-core-2.3.0.jar jgraph-5.13.0.0.jar jgrap
+ ht-core-0.9.0.jar jgrapht-ext-0.9.0.jar jgraphx-2.0.0.1.jar jsoup-1.7
+ .2.jar junit-4.10.jar lucene-analyzers-common-6.2.0.jar lucene-codecs
+ -6.2.0.jar lucene-core-6.2.0.jar lucene-queries-6.2.0.jar lucene-quer
+ yparser-6.2.0.jar samurai.jar slf4j-api-1.7.17.jar sqljdbc4.jar stanf
+ ord-postagger-3.6.0.jar stemmer-traceback.jar xom.jar
+Class-Path: .
+Rsrc-Main-Class: core.items.BLIZZARDRunner
+Main-Class: org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader
