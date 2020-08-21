@@ -105,9 +105,10 @@ public class BLIZZARDQueryManager {
 			fixedThreadPool.execute(new queryReformTask(bugID, this.repoName, this.reportMap.get(bugID), this.reportTitleMap.get(bugID), this.suggestedQueryCurMap));
 		}
 		try{
-			fixedThreadPool.awaitTermination(1, TimeUnit.DAYS);}
+			fixedThreadPool.awaitTermination(30, TimeUnit.MINUTES);}
 		catch (Exception e) {
 			System.out.println("Main Terminate: "+ e);
+			return new HashMap<Integer, String>(this.suggestedQueryCurMap);
 		}
 		System.out.println("Concurrent Query Reformulation completed successfully :-)");
 		return new HashMap<Integer, String>(this.suggestedQueryCurMap);
