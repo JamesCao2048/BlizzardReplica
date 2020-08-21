@@ -105,7 +105,7 @@ public class BLIZZARDQueryManager {
 			fixedThreadPool.execute(new queryReformTask(bugID, this.repoName, this.reportMap.get(bugID), this.reportTitleMap.get(bugID), this.suggestedQueryCurMap));
 		}
 		try{
-			fixedThreadPool.awaitTermination(30, TimeUnit.MINUTES);}
+			fixedThreadPool.awaitTermination(30, TimeUnit.SECONDS);}
 		catch (Exception e) {
 			System.out.println("Main Terminate: "+ e);
 			return new HashMap<Integer, String>(this.suggestedQueryCurMap);
