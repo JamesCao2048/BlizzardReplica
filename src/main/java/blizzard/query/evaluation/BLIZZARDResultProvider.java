@@ -98,15 +98,15 @@ public class BLIZZARDResultProvider {
 	protected void setTopK(ArrayList<Integer> foundIndices) {
 		HashSet<Integer> uniquesIndices=new HashSet<Integer>(foundIndices);
 		for (int index : uniquesIndices) {
-			if(index == 0)
+			if(index == 1)
 				this.Top1Count++;
-			if(index <= 4)
+			if(index <= 5)
 				this.Top5Count++;
-			if(index <= 9)
+			if(index <= 10)
 				this.Top10Count++;
-			if(index <= 19)
+			if(index <= 20)
 				this.Top20Count++;
-			if(index <= 49)
+			if(index <= 50)
 				this.Top50Count++;
 		}
 	}
