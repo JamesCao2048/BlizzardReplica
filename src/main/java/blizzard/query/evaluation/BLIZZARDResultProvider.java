@@ -97,18 +97,34 @@ public class BLIZZARDResultProvider {
 
 	protected void setTopK(ArrayList<Integer> foundIndices) {
 		HashSet<Integer> uniquesIndices=new HashSet<Integer>(foundIndices);
+		boolean top1Flag = false;
+		boolean top5Flag = false;
+		boolean top10Flag = false;
+		boolean top20Flag = false;
+		boolean top50Flag = false;
+
 		for (int index : uniquesIndices) {
 			if(index == 1)
-				this.Top1Count++;
+				top1Flag = true;
 			if(index <= 5)
-				this.Top5Count++;
+				top5Flag = true;
 			if(index <= 10)
-				this.Top10Count++;
+				top10Flag = true;
 			if(index <= 20)
-				this.Top20Count++;
+				top20Flag = true;
 			if(index <= 50)
-				this.Top50Count++;
+				top50Flag = true;
 		}
+		if(top1Flag)
+			this.Top1Count++;
+		if(top5Flag)
+			this.Top5Count++;
+		if(top10Flag)
+			this.Top10Count++;
+		if(top20Flag)
+			this.Top20Count++;
+		if(top50Flag)
+			this.Top50Count++;
 	}
 
 	protected double getRecall(ArrayList<Integer> foundIndices,
