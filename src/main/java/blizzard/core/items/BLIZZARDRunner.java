@@ -122,7 +122,7 @@ public class BLIZZARDRunner {
 					System.out.println("Please enter your result file.");
 				}
 
-				if (topk <= 10) {
+				if (topk <= 50) {
 					if (!repoName.isEmpty() && !queryFile.isEmpty()
 							&& !resultFile.isEmpty()) {
 						BLIZZARDResultProvider bprovider = new BLIZZARDResultProvider(

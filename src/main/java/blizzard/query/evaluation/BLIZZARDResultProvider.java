@@ -17,6 +17,16 @@ public class BLIZZARDResultProvider {
 	String queryFile;
 	public HashMap<Integer, String> queryMap;
 	double TopkAcc;
+	double Top1Acc;
+	double Top1Count;
+	double Top5Acc;
+	double Top5Count;
+	double Top10Acc;
+	double Top10Count;
+	double Top20Acc;
+	double Top20Count;
+	double Top50Acc;
+	double Top50Count;
 	double mapK;
 	double mrrK;
 	double mrK;
@@ -85,6 +95,22 @@ public class BLIZZARDResultProvider {
 		return sumPrecision / indexcount;
 	}
 
+	protected void setTopK(ArrayList<Integer> foundIndices) {
+		HashSet<Integer> uniquesIndices=new HashSet<Integer>(foundIndices);
+		for (int index : uniquesIndices) {
+			if(index == 0)
+				this.Top1Count++;
+			if(index <= 4)
+				this.Top5Count++;
+			if(index <= 9)
+				this.Top10Count++;
+			if(index <= 19)
+				this.Top20Count++;
+			if(index <= 49)
+				this.Top50Count++;
+		}
+	}
+
 	protected double getRecall(ArrayList<Integer> foundIndices,
 			ArrayList<String> goldset) {
 		// calculating recall
@@ -148,6 +174,7 @@ public class BLIZZARDResultProvider {
 					sumAP += ap;
 					sumAcc++;
 				}
+				setTopK(indices);
 			}
 		}
 
@@ -155,11 +182,21 @@ public class BLIZZARDResultProvider {
 		this.TopkAcc = (double) sumAcc / resultMap.size();
 		this.mrrK = sumRR / resultMap.size();
 		this.mapK = sumAP / resultMap.size();
+		this.Top1Acc = this.Top1Count / resultMap.size();
+		this.Top5Acc = this.Top5Count / resultMap.size();
+		this.Top10Acc = this.Top10Count / resultMap.size();
+		this.Top20Acc = this.Top20Count / resultMap.size();
+		this.Top50Acc = this.Top50Count / resultMap.size();
 
 		// System.out.println(repoName + " " + this.TopkAcc);
 
 		System.out.println("System: " + repoName);
 		System.out.println("Hit@" + TOPK + " Accuracy: " + this.getTopKAcc());
+		System.out.println("Hit@" + 1 + " Accuracy: " + this.Top1Acc);
+		System.out.println("Hit@" + 5 + " Accuracy: " + this.Top5Acc);
+		System.out.println("Hit@" + 10 + " Accuracy: " + this.Top10Acc);
+		System.out.println("Hit@" + 20 + " Accuracy: " + this.Top20Acc);
+		System.out.println("Hit@" + 50 + " Accuracy: " + this.Top50Acc);
 		System.out.println("MRR@" + TOPK + ": " + this.getMRRK());
 		System.out.println("MAP@" + TOPK + ": " + this.getMAPK());
 

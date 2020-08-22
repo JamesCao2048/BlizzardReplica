@@ -29,7 +29,7 @@ public class LuceneSearcher {
 	String queryString = null;
 	int hitsPerPage = 10;
 	String searchQuery;
-	public int TOPK_RESULTS = 10;
+	public int TOPK_RESULTS = 50;
 	int ALL_RESULTS = 100000;
 	ArrayList<String> results;
 	public ArrayList<String> goldset;
