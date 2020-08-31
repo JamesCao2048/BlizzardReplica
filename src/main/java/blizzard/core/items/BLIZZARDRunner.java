@@ -93,7 +93,6 @@ public class BLIZZARDRunner {
 						}
 						else{
 							String prefix = queryFile;
-							repoName = "aspectj";
 							bugIDFile = prefix+"sample-" + repoName + "-bugs.txt";
 							String peFIle = prefix+"sample-" + repoName +"-bugs-pe.txt";
 							String nlFIle = prefix+"sample-" + repoName +"-bugs-nl.txt";
