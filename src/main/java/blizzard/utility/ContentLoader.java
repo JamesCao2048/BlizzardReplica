@@ -7,9 +7,7 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class ContentLoader {
 
@@ -29,6 +27,7 @@ public class ContentLoader {
 			bufferedReader.close();
 		} catch (Exception ex) {
 			// handle the exception
+			System.out.println(ex);
 		}
 		return fileContent;
 	}
@@ -54,8 +53,28 @@ public class ContentLoader {
 			bufferedReader.close();
 		} catch (Exception ex) {
 			// handle the exception
+			System.out.println(ex);
 		}
 		return lines;
+	}
+
+	public static Map<String, String> loadMap(String fileName, String delimeter) {
+		Map<String, String> map = new HashMap<>();
+		try {
+			File f = new File(fileName);
+			BufferedReader bufferedReader = new BufferedReader(
+					new FileReader(f));
+			while (bufferedReader.ready()) {
+				String[] items = bufferedReader.readLine().trim().split(delimeter);
+				if(items.length >= 2)
+					map.put(items[0], items[1]);
+			}
+			bufferedReader.close();
+		} catch (Exception ex) {
+			// handle the exception
+			System.out.println(ex);
+		}
+		return map;
 	}
 	
 	public static ArrayList<String> getAllTokens(String fileName) {
@@ -110,6 +129,7 @@ public class ContentLoader {
 			}
 		} catch (Exception exc) {
 			// handle the exception
+			System.out.println(exc);
 		}
 		return content;
 	}

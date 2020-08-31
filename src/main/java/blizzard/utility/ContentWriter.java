@@ -4,9 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ContentWriter {
-	public static boolean writeContent(String outFile, ArrayList<String> items) {
+	public static boolean writeContent(String outFile, List<String> items) {
 		// writing content to output
 		boolean written = false;
 		try {
@@ -35,6 +36,23 @@ public class ContentWriter {
 			fwriter.close();
 			written = true;
 
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+		return written;
+	}
+
+	public static boolean writeMap(String outFile, Map<String,String> items, String delimeter) {
+		// writing content to output with index
+		boolean written = false;
+		try {
+			FileWriter fwriter = new FileWriter(new File(outFile));
+
+			for (String key: items.keySet()) {
+				fwriter.write(key+ delimeter +items.get(key)+"\n");
+			}
+			fwriter.close();
+			written = true;
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}

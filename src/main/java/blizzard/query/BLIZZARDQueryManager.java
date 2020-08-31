@@ -1,14 +1,15 @@
 package blizzard.query;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import blizzard.utility.BugReportLoader;
 import blizzard.utility.ContentLoader;
+import blizzard.utility.ContentWriter;
 
 public class BLIZZARDQueryManager {
 
@@ -19,6 +20,9 @@ public class BLIZZARDQueryManager {
 	HashMap<Integer, String> suggestedQueryMap; //[bugid, reformulate后推荐的query]
 	ConcurrentHashMap<Integer, String> suggestedQueryCurMap;
 	ExecutorService fixedThreadPool;
+	ConcurrentHashMap<Integer, Boolean> brSTMap;
+	ConcurrentHashMap<Integer, Boolean> brPEMap;
+	ConcurrentHashMap<Integer, Boolean> brNLMap;
 
 	public BLIZZARDQueryManager(String repoName, String bugIDFile) {
 		this.repoName = repoName;
@@ -29,6 +33,9 @@ public class BLIZZARDQueryManager {
 		this.reportMap = loadReportMap();
 		this.reportTitleMap = loadReportTitleMap(reportMap);
 		this.fixedThreadPool = Executors.newFixedThreadPool(12);
+		this.brNLMap = new ConcurrentHashMap<>();
+		this.brPEMap = new ConcurrentHashMap<>();
+		this.brSTMap = new ConcurrentHashMap<>();
 	}
 
 	protected String extractTitle(String reportContent) {
@@ -105,11 +112,86 @@ public class BLIZZARDQueryManager {
 			fixedThreadPool.execute(new queryReformTask(bugID, this.repoName, this.reportMap.get(bugID), this.reportTitleMap.get(bugID), this.suggestedQueryCurMap));
 		}
 		fixedThreadPool.shutdown();
+		try{
+		fixedThreadPool.awaitTermination(5, TimeUnit.MINUTES);}
+		catch (Exception e) {
+			System.out.println(e);
+		}
 		while(!fixedThreadPool.isTerminated()){
 			Thread.yield();
 		}
 		System.out.println("Concurrent Query Reformulation completed successfully :-)");
 		return new HashMap<Integer, String>(this.suggestedQueryCurMap);
+	}
+
+	private class bugReportClassifyTask implements Runnable {
+		int  bugID;
+		String repoName;
+		String reportContent;
+		String title;
+		ConcurrentHashMap<Integer, Boolean> stMap;
+		ConcurrentHashMap<Integer, Boolean> peMap;
+		ConcurrentHashMap<Integer, Boolean> nlMap;
+		public bugReportClassifyTask(int bid, String rName, String content, String t,
+									 ConcurrentHashMap<Integer, Boolean> st, ConcurrentHashMap<Integer, Boolean> pe, ConcurrentHashMap<Integer, Boolean> nl) {
+			bugID = bid;
+			repoName = rName;
+			reportContent = content;
+			title = t;
+			stMap = st;
+			peMap = pe;
+			nlMap = nl;
+		}
+
+		public void run() {
+			double start = System.currentTimeMillis();
+			System.out.println("Execute ThreadName=" + Thread.currentThread().getName() + " bugid="+bugID);
+			BLIZZARDQueryProvider provider = new BLIZZARDQueryProvider(this.repoName, this.bugID, this.title, this.reportContent);
+			if(provider.reportGroup.equals("PE")) {
+				this.peMap.put(bugID, true);
+			}
+			else if(provider.reportGroup.equals("NL")) {
+				this.nlMap.put(bugID, true);
+			}
+			else if(provider.reportGroup.equals("ST")) {
+				this.stMap.put(bugID, true);
+			}
+			double finish = System.currentTimeMillis();
+			double elapsed  = (finish-start)/1000;
+			System.out.println("Done: " + bugID + " Type: "+ provider.reportGroup +" Elapsed Time: " +elapsed +"s");
+			System.out.println("Cur count: ST" + this.stMap.size() + " PE: "+ this.peMap.size() +" NL: " + this.nlMap.size());
+		}
+	}
+
+	public void classifyBugReportConcur(String peFile, String stFile, String nlFile) {
+		System.out.println("Concurrent Bug Report classify may take a few minutes. Please wait...");
+		for (int bugID : this.reportMap.keySet()) {
+			fixedThreadPool.execute(new bugReportClassifyTask(bugID, this.repoName, this.reportMap.get(bugID),
+					this.reportTitleMap.get(bugID), this.brSTMap, this.brPEMap, this.brNLMap));
+		}
+		fixedThreadPool.shutdown();
+//		try{
+////			fixedThreadPool.awaitTermination(5, TimeUnit.MINUTES);}
+////		catch (Exception e) {
+////			System.out.println(e);
+////		}
+		while(!fixedThreadPool.isTerminated()){
+			Thread.yield();
+		}
+		System.out.println("Concurrent Bug Report classify completed successfully :-)");
+		System.out.println("Total count: ST" + this.brSTMap.size() + " PE: "+ this.brPEMap.size()+" NL: " + this.brNLMap.size());
+		ContentWriter.writeContent(peFile, mapToList(this.brPEMap));
+		ContentWriter.writeContent(stFile, mapToList(this.brSTMap));
+		ContentWriter.writeContent(nlFile, mapToList(this.brNLMap));
+	}
+
+	public static List<String> mapToList(ConcurrentHashMap<Integer, Boolean> map) {
+		List<String> res = new LinkedList<>();
+		Enumeration<Integer> en = map.keys();
+		while(en.hasMoreElements()){
+			res.add(en.nextElement().toString());
+		}
+		return res;
 	}
 
 	public static void main(String[] args) {

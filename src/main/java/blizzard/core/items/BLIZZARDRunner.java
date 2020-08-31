@@ -86,9 +86,20 @@ public class BLIZZARDRunner {
 				if (!repoName.isEmpty() && !bugIDFile.isEmpty()
 						&& !queryFile.isEmpty()) {
 					if(keymap.containsKey("-concur")){
+						if(keymap.get("-concur").equals("2")){
 						HashMap<Integer, String> suggestedQueries = new BLIZZARDQueryManager(
 								repoName, bugIDFile).getSuggestedQueriesConcur();
 						saveItems(queryFile, suggestedQueries);
+						}
+						else{
+							String prefix = queryFile;
+							repoName = "aspectj";
+							bugIDFile = prefix+"sample-" + repoName + "-bugs.txt";
+							String peFIle = prefix+"sample-" + repoName +"-bugs-pe.txt";
+							String nlFIle = prefix+"sample-" + repoName +"-bugs-nl.txt";
+							String stFIle = prefix+"sample-" + repoName +"-bugs-st.txt";
+							new BLIZZARDQueryManager(repoName, bugIDFile).classifyBugReportConcur(peFIle, stFIle, nlFIle);
+						}
 					}
 					else {
 						HashMap<Integer, String> suggestedQueries = new BLIZZARDQueryManager(
